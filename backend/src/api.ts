@@ -58,3 +58,8 @@ export const updateEmployeeParent = (req: Request, res: Response, employees: { [
 
     res.json({ id: employee.id });
 };
+
+export const getAllEmployees = (req: Request, res: Response, employees: { [key: number]: Employee }) => {
+    const employeesArray = Object.values(employees);
+    res.status(200).json(employeesArray);
+};

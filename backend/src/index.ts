@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { createEmployee, getEmployeeChildren, updateEmployeeParent } from './api';
+import { createEmployee, getEmployeeChildren, updateEmployeeParent, getAllEmployees } from './api';
 import { Manager, Departments, Employee } from './models';
 
 const app = express();
@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 const employees: { [key: number]: Employee } = {};
 let employeeCounter = { count: 0 };
 
+app.get('/api/employees', (req, res) => getAllEmployees(req, res, employees));
 app.post('/api/employees', (req, res) => createEmployee(req, res, employees, employeeCounter));
 app.get('/api/employees/:id/children', (req, res) => getEmployeeChildren(req, res, employees));
 app.patch('/api/employees/:id/parent', (req, res) => updateEmployeeParent(req, res, employees));
