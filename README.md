@@ -1,6 +1,6 @@
 # Code Challenge
 
-Backend and partial backend for the assignment 
+Backend and partial frontend for the assignment 
 
 ## Steps to build
 
