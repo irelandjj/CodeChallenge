@@ -36,3 +36,25 @@ export const getEmployeeChildren = (req: Request, res: Response, employees: { [k
     const employeeIds = parent.employees.map(emp => emp.id);
     res.json(employeeIds);
 };
+
+export const updateEmployeeParent = (req: Request, res: Response, employees: { [key: number]: Employee }) => {
+    const { newParentId } = req.body;
+    const employee = employees[parseInt(req.params.id)];
+    const newParent = employees[newParentId] as Manager;
+
+    if (!employee || !newParent) {
+        return res.status(404).send('Employee or new parent not found');
+    }
+
+    if (employee.parent) {
+        const oldParentIndex = employee.parent.employees.findIndex(e => e.id === employee.id);
+        if (oldParentIndex > -1) {
+          employee.parent.employees.splice(oldParentIndex, 1);
+        }
+      }      
+
+    employee.parent = newParent;
+    newParent.addEmployee(employee);
+
+    res.json({ id: employee.id });
+};
